@@ -1,0 +1,20 @@
+name: Toxic Water 2
+version: 3.5
+description: Injures a player who comes into contact with water.
+main: com.rad0din.toxicwater2.Main
+
+commands:
+  toxic-water:
+    description: Pulls up plugin description.
+    aliases: [tw]
+  reload:
+    description: Reloads the plugin.
+    aliases: [tw reload]
+
+permissions:
+  toxic-water.disable:
+    description: Disables injuring a player in water.
+    default: op
+  toxic-water.reload:
+    description: Reloads the plugin.
+    default: op
