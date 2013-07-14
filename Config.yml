@@ -1,0 +1,86 @@
+# Toxic Water 2 #
+
+# Version 3.5 #
+
+Damage: 1.0
+# The amount of damage received when in contact with water. 20 = player's full health.
+
+Time: 20
+# Time is how long of a delay there is between contact with water and a player being hurt 20 = 1s, 40 = 2s, etc.
+
+Biome-Specific: false
+# Biome-Specific can be set to either true or false to enable or disable this plugin in specific biomes. If set to "true" please specify the biomes below.
+
+
+# Unsure what biome you're in? Use F3 for windows or fn + F3 for mac and 
+# look on the middle left hand side of your screen under "b:"
+
+
+Toxic-Water Bottles: false
+# Should water drank by players in water bottles do damage?
+
+Water Bottle Damage: 1.0
+# If "Toxic-Water Bottles" is set to "true", how much damage should water bottles do?
+
+Beach: false
+# Make water toxic in the beach biome?
+
+Desert: false
+# Make water toxic in the desert biome?
+
+Desert_Hills: false
+# Make water toxic in the desert_hills biome?
+
+Extreme_Hills: false
+# Make water toxic in the extreme_hills biome?
+
+Forest: true
+# Make water toxic in the forest biome?
+
+Forest_Hills: false
+# Make water toxic in the forest_hills biome?
+
+Frozen_Ocean: false
+# Make water toxic in the frozen_ocean biome?
+
+Frozen_River: false
+# Make water toxic in the forzen_river biome?
+
+Hell: false
+# Make water toxic in the nether biome?
+
+Ice_plains: false
+# Make water toxic in the ice_plains biome?
+
+Jungle: false
+# Make water toxic in the jungle biome?
+
+Jungle_Hills: false
+# Make water toxic in the jungle_hills biome?
+
+Mushroom_Island: false
+# Make water toxic in the mushroom_island biome?
+
+Mushroom_Room: false
+# Make water toxic in the mushroom_room biome?
+
+Ocean: false
+# Make water toxic in the ocean biome?
+
+Plains: false
+# Make water toxic in the plains biome?
+
+River: false
+# Make water toxic in the river biome?
+
+Small_Mountains: false
+# Make water toxic in the small_moutains biome?
+
+Swampland: false
+# Make water toxic in the swampland biome?
+
+Taiga: false
+# Make water toxic in the taiga biome?
+
+Taiga_Hills: false
+# Make water toxic in the taiga_hills biome?
