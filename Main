@@ -1,0 +1,287 @@
+package com.rad0din.toxicwater2;
+
+import java.util.ArrayList;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.block.Biome;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class Main extends JavaPlugin implements Listener
+{
+  
+  public ArrayList<Location> region = new ArrayList<Location>();
+  
+public void onEnable()
+  {
+    config();
+    System.out.println("[Toxic-Water 2] Has been enabled!");
+    getServer().getPluginManager().registerEvents(this, this);
+    getServer().getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
+      public void run() {
+        Main.this.damage();
+      }
+    }
+    , 0L, getConfig().getInt("Time"));
+  }
+
+  public void onDisable() {
+    getServer().getScheduler().cancelTasks(this);
+    System.out.println("[Toxic-Water 2] Has been disabled!");
+  }
+  public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+    if ((sender instanceof Player)) {
+      Player p = (Player) sender;
+      if (cmd.getName().equalsIgnoreCase("toxic-water")) {
+        if (args.length == 0) {
+          p.sendMessage(ChatColor.AQUA + "Toxic Water 2");
+          p.sendMessage(ChatColor.GREEN + "Version: 3.5");
+          p.sendMessage(ChatColor.AQUA + "Author: Yocole");
+          p.sendMessage(ChatColor.GREEN + "Use /tw reload to reload the config");
+        }
+
+        if ((args.length == 1) && 
+          (args[0].equalsIgnoreCase("reload"))) {
+          reloadConfig();
+          p.sendMessage(ChatColor.AQUA + "Toxic-Water config reloaded!");
+        }
+      }
+    }
+    return false;
+
+  }
+  public void config() {
+    getConfig().addDefault("Damage", Double.valueOf(1));
+    //getConfig().addDefault("Time", Integer.valueOf(20));
+    getConfig().addDefault("Toxic-Water Bottles", Boolean.FALSE);
+    getConfig().addDefault("Water Bottle Damage", Double.valueOf(1.5));
+    getConfig().addDefault("Biome-Specific", Boolean.FALSE);
+    getConfig().addDefault("Beach", Boolean.FALSE);
+    getConfig().addDefault("Desert", Boolean.FALSE);
+    getConfig().addDefault("Desert_Hills", Boolean.FALSE);
+    getConfig().addDefault("Extreme_Hills", Boolean.FALSE);
+    getConfig().addDefault("Forest", Boolean.FALSE);
+    getConfig().addDefault("Forest_Hills", Boolean.FALSE);
+    getConfig().addDefault("Frozen_Ocean", Boolean.FALSE);
+    getConfig().addDefault("Frozen_River", Boolean.FALSE);
+    getConfig().addDefault("Hell", Boolean.FALSE);
+    getConfig().addDefault("Ice_plains", Boolean.FALSE);
+    getConfig().addDefault("Jungle", Boolean.FALSE);
+    getConfig().addDefault("Jungle_Hills", Boolean.FALSE);
+    getConfig().addDefault("Mushroom_Island", Boolean.FALSE);
+    getConfig().addDefault("Mushroom_Room", Boolean.FALSE);
+    getConfig().addDefault("Ocean", Boolean.FALSE);
+    getConfig().addDefault("Plains", Boolean.FALSE);
+    getConfig().addDefault("River", Boolean.FALSE);
+    getConfig().addDefault("Small_Mountains", Boolean.FALSE);
+    getConfig().addDefault("Swampland", Boolean.FALSE);
+    getConfig().addDefault("Taiga", Boolean.FALSE);
+    getConfig().addDefault("Taiga_Hills", Boolean.FALSE);
+    getConfig().options().copyDefaults(true);
+    this.saveDefaultConfig();
+  }
+  public void damage() {
+    for (Player p : getServer().getOnlinePlayers())
+      if (!p.hasPermission("toxic-water.disable"))
+      {
+        Player player = (Player) p;
+    	  Biome biomeData = player.getWorld().getBlockAt(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()).getBiome();
+    	      	
+    	if (p.getLocation().getBlock().getTypeId() == 9 && getConfig().getBoolean("Biome-Specific") == false) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.BEACH && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Beach") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.DESERT && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Desert") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		    		
+        } 
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.DESERT_HILLS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Desert_Hills") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.EXTREME_HILLS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Extreme_Hills") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.FOREST && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Forest") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.FOREST_HILLS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Forest_Hills") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.FROZEN_OCEAN && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Frozen_Ocean") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.FROZEN_RIVER && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Frozen_River") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.HELL && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Hell") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.ICE_MOUNTAINS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Ice_Mountains") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.ICE_PLAINS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Ice_Plains") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.JUNGLE && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Jungle") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.JUNGLE_HILLS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Jungle_Hills") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.MUSHROOM_ISLAND && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Mushroom_Island") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.MUSHROOM_SHORE && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Mushroom_Shore") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.OCEAN && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Ocean") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.PLAINS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Plains") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.RIVER && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("River") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.SMALL_MOUNTAINS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Small_Mountains") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.SWAMPLAND && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Swampland") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.TAIGA && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Taiga") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		
+        }
+        if (p.getLocation().getBlock().getTypeId() == 9 && biomeData == Biome.TAIGA_HILLS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Taiga_Hills") == true) {
+          	p.damage(getConfig().getDouble("Damage"));
+    		
+        }
+      
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.BEACH && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Beach") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		    		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.DESERT && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Desert") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		    		
+      } 
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.DESERT_HILLS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Desert_Hills") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		    		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.EXTREME_HILLS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Extreme_Hills") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		    		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.FOREST && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Forest") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		    		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.FOREST_HILLS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Forest_Hills") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		    		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.FROZEN_OCEAN && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Frozen_Ocean") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		    		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.FROZEN_RIVER && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Frozen_River") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		    		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.HELL && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Hell") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		    		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.ICE_MOUNTAINS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Ice_Mountains") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		    		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.ICE_PLAINS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Ice_Plains") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		    		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.JUNGLE && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Jungle") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		    		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.JUNGLE_HILLS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Jungle_Hills") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		    		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.MUSHROOM_ISLAND && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Mushroom_Island") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		    		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.MUSHROOM_SHORE && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Mushroom_Shore") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		    		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.OCEAN && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Ocean") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.PLAINS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Plains") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.RIVER && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("River") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.SMALL_MOUNTAINS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Small_Mountains") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.SWAMPLAND && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Swampland") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.TAIGA && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Taiga") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+  		
+      }
+      if (p.getLocation().getBlock().getTypeId() == 8 && biomeData == Biome.TAIGA_HILLS && getConfig().getBoolean("Biome-Specific") == true && getConfig().getBoolean("Taiga_Hills") == true) {
+        	p.damage(getConfig().getDouble("Damage"));
+      	}
+      }
+  }
+  
+  @EventHandler
+  public void onPlayerInteract(PlayerInteractEvent event) {
+	  Player p = event.getPlayer();
+	  
+	  if(p.getItemInHand().getTypeId() == 373 && getConfig().getBoolean("Toxic-Water Bottles") == true) {
+		  p.damage(getConfig().getDouble("Water Bottle Damage"));
+	  }
+  }
+}
